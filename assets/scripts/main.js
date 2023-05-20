@@ -52,17 +52,15 @@ function initializeServiceWorker() {
       // B3. TODO - Register './sw.js' as a service worker (The MDN article
       //            "Using Service Workers" will help you here)
       try {
-        let reg = await navigator.serviceWorker.register('./sw.js');
+        await navigator.serviceWorker.register('./sw.js');
         // B4. TODO - Once the service worker has been successfully registered, console
         //            log that it was successful.
-        if (reg.active) {
-          console.log('registration successful ' + reg);
-        }
+        console.log('registration successful');
       } 
       // B5. TODO - In the event that the service worker registration fails, console
       //            log that it has failed.
       catch (error) {
-        console.error('registration failed ' + error);
+        console.error('registration failed');
       }
       // STEPS B6 ONWARDS WILL BE IN /sw.js
     });
@@ -114,9 +112,9 @@ async function getRecipes() {
         // A7. TODO - For each fetch response, retrieve the JSON from it using .json().
         //            NOTE: .json() is ALSO asynchronous, so you will need to use
         //            "await" again
-        let retrieveRes = await fetchRes.json();
+        let retriRes = await fetchRes.json();
         // A8. TODO - Add the new recipe to the recipes array
-        recipesArr.push(retrieveRes);
+        recipesArr.push(retriRes);
         // A9. TODO - Check to see if you have finished retrieving all of the recipes,
         //            if you have, then save the recipes to storage using the function
         //            we have provided. Then, pass the recipes array to the Promise's
