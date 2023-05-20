@@ -47,14 +47,12 @@ function initializeServiceWorker() {
   // B1. TODO - Check if 'serviceWorker' is supported in the current browser
   if ('serviceWorker' in navigator) {
     // B2. TODO - Listen for the 'load' event on the window object.
-    window.addEventListener('load', function () {
+    window.addEventListener('load', async function () {
       // Steps B3-B6 will be *inside* the event listener's function created in B2
       // B3. TODO - Register './sw.js' as a service worker (The MDN article
       //            "Using Service Workers" will help you here)
       try {
-        let reg = navigator.serviceWorker.register('./sw.js', {
-          scope: './',
-        });
+        let reg = await navigator.serviceWorker.register('./sw.js');
         // B4. TODO - Once the service worker has been successfully registered, console
         //            log that it was successful.
         if (reg.active) {
@@ -83,7 +81,7 @@ async function getRecipes() {
   // EXPOSE - START (All expose numbers start with A)
   // A1. TODO - Check local storage to see if there are any recipes.
   //            If there are recipes, return them.
-  if (JSON.parse(localStorage.getItem('recipes')) != null) {
+  if (localStorage.getItem('recipes') != null) {
     return JSON.parse(localStorage.getItem('recipes'));
   }
   /**************************/
@@ -103,7 +101,7 @@ async function getRecipes() {
     /**************************/
     // A4. TODO - Loop through each recipe in the RECIPE_URLS array constant
     //            declared above
-    for (let i = 0; i < RECIPE_URLS.length; ++i) {
+    for (let i = 0; i < RECIPE_URLS.length; i++) {
       // A5. TODO - Since we are going to be dealing with asynchronous code, create
       //            a try / catch block. A6-A9 will be in the try portion, A10-A11
       //            will be in the catch portion.
@@ -123,8 +121,8 @@ async function getRecipes() {
         //            if you have, then save the recipes to storage using the function
         //            we have provided. Then, pass the recipes array to the Promise's
         //            resolve() method.            
-        if (i == (RECIPE_URLS.length - 1)) {
-          saveRecipesToStorage(recipeArray);
+        if (i == RECIPE_URLS.length - 1) {
+          saveRecipesToStorage(recipesArr);
           resolve(recipesArr);
         }
       }
